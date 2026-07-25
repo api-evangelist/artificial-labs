@@ -1,0 +1,305 @@
+aid: artificial-labs
+name: Artificial Labs
+review:
+  question: Does Artificial Labs expose a public, self-serve developer portal or a
+    downloadable API definition for its specialty insurance underwriting and placement
+    platform?
+  answer: false
+  date: '2026-07-25'
+  reviewer: API Evangelist
+  homeMarket: United Kingdom
+  sector: Insurance
+  tier: underwriting-ai
+  openapiHarvested: false
+  specsCount: 0
+  gated: true
+findings:
+  summary: |
+    Artificial Labs runs real, production APIs and says so publicly, but none of
+    that surface is reachable, documented, or specified outside a signed customer
+    or partner relationship. This is the classic London Market shape: the API
+    work is genuine and standards-aligned, and it is entirely invisible from the
+    outside.
+
+    The only documentation host is docs.artificial.io. It answers HTTP 200 at
+    https://docs.artificial.io/ but that response is a 413-byte redirect stub to
+    https://docs.artificial.io/docs-site/, which is also HTTP 200 and is an
+    Antora 3.1.12 site. That landing page lists three products (Smart
+    Underwriting, Smart Placement, Contract Builder) and a Glossary, and states
+    verbatim: "This site provides product documentation for Artificial's suite
+    of insurance technology solutions... Sign in to access guides, references,
+    and technical resources for your products." and "To view the documentation,
+    you must sign in." Every path below the landing page — /smart-underwriting/,
+    /smart-placement/, /contract-builder/, /docs-site/reference/glossary/ — returns
+    HTTP 302 to an Auth0 authorization-code login at
+    https://auth.artificialos.com/authorize (client_id doz61CY73D2YYnTftWiDXl5j31Npm7b7,
+    scope "openid profile email", redirect_uri https://docs.artificial.io/oauth2/callback),
+    fronted by oauth2-proxy. https://docs.artificial.io/robots.txt is HTTP 200 and
+    reads "User-agent: * / Disallow: /". This is a customer/partner login wall, not
+    a self-serve developer portal.
+
+    No public API host exists. api.artificial.io, developer.artificial.io,
+    developers.artificial.io, app.artificial.io and platform.artificial.io return
+    no DNS records at all. artificialos.com, api.artificialos.com,
+    app.artificialos.com and docs.artificialos.com likewise do not resolve; only
+    auth.artificialos.com resolves, to an Auth0 UK tenant
+    (artificial.uk.auth0.com). On artificial.io itself, /developers, /api,
+    /developer, /partners and /integrations all return HTTP 404, and the published
+    sitemap (https://www.artificial.io/sitemap-pages.xml, 147 URLs) contains no
+    developer, API, or integration page — only /about, /brokers, /careers,
+    /contact, /eula, /privacy, /security, /underwriting-platform, /website-terms
+    and the blog.
+
+    No downloadable specification was found. /openapi.json, /openapi.yaml,
+    /swagger.json, /api-docs, /spec and /redoc on docs.artificial.io all 302 to
+    the same Auth0 login; nothing parsed as OpenAPI or Swagger. Nothing was saved
+    to openapi/ and the directory was deliberately omitted. A Postman public
+    search for "artificial labs insurance" returned zero workspaces, collections,
+    APIs, or specifications. The GitHub organization github.com/artificial-labs
+    exists (HTTP 200, id 92927772, created 2021-10-21) with public_repos = 0. No
+    GraphQL endpoint, no .proto, no AsyncAPI, and no event or webhook catalog was
+    found anywhere on the public surface. artificial.io/llms.txt returns HTTP 404;
+    docs.artificial.io/llms.txt 302s to the login.
+
+    ACORD posture is the strongest and most concrete signal on this record, and it
+    is substantive rather than marketing. Artificial joined the ACORD Solutions
+    Group Licensed Integrator Partner program in October 2023 ("Artificial joins
+    ACORD to harness data standards", 03 Oct 2023). Contract Builder and Smart
+    Placement "operate under one structured data model that incorporates MRC v3,
+    ACORD GRLC and the Core Data Record (CDR)", with "pre-submission validation
+    built around MRCv3 and ACORD standards". The PPL integrated Digital Contract
+    Capability, powered by Artificial, gives brokers "structured data templates
+    with API connectivity to brokers' own in-house systems, in alignment with
+    ACORD data models". Artificial also consumes a third-party ACORD API: "we
+    integrated with the ACORD Transcriber API to add yet another data extraction
+    capability to our broking and underwriting tools". No AL3 flat-file, NGDS,
+    IVANS, agency-download, Applied Epic or Vertafore reference was found — which
+    is consistent with a London Market specialty player rather than a US
+    retail-agency one.
+
+    On the four insurance verbs, Artificial's own blog describes a working
+    quote-and-bind loop without publishing it: "when the broker enters the risk
+    into their PAS, the risk data is sent immediately via API to the Artificial
+    platform" containing the syndicate's underwriting appetite, and "if risks meet
+    the underwriting criteria, they are accepted, have a written line and rate
+    calculated, and the risk details are then sent back via API to the broker and
+    underwriter's PAS". That is quote and bind, partner-to-partner, broker-and-
+    underwriter facing, never consumer facing. Issue is covered indirectly through
+    Contract Builder's MRCv3 contract generation. No FNOL or claims API surface
+    was found; Artificial does not sell a claims product. The company publishes
+    real API engineering thinking — including a post titled "Resilient REST APIs:
+    The case for Parallel Change" that shows an OpenAPI document describing a
+    policies collection — but that document is an illustrative figure in a blog
+    post, not a published, retrievable specification, and it was not harvested.
+  developerPortal:
+    url: https://docs.artificial.io/docs-site/
+    httpStatus: 200
+    confirmed: false
+    classification: partner/customer login wall
+    note: |
+      Landing page is publicly readable and HTTP 200, but carries no reference
+      documentation. All product and reference paths 302 to Auth0. Judged (b) a
+      partner/agent login wall, not (a) a real self-serve developer portal.
+  acordPosture: ACORD Solutions Group Licensed Integrator Partner; MRCv3 + ACORD
+    GRLC + Lloyd's Core Data Record data model, and consumes the ACORD Transcriber API
+  insuranceVerbs:
+    quote:
+      exposed: false
+      documentedPublicly: false
+      audience: partner (broker PAS to carrier/syndicate)
+      note: Described in company blog as a live API flow with a London Market broker
+        and a Lloyd's syndicate; no public endpoint or specification.
+    bind:
+      exposed: false
+      documentedPublicly: false
+      audience: partner (broker PAS to carrier/syndicate)
+      note: Written line and rate returned via API to the broker and underwriter PAS;
+        partner-integrated only.
+    issue:
+      exposed: false
+      documentedPublicly: false
+      audience: partner (broker)
+      note: Contract Builder generates MRCv3-compliant digital contracts and powers
+        PPL's integrated Digital Contract Capability; no public API.
+    fnol:
+      exposed: false
+      documentedPublicly: false
+      audience: none
+      note: No claims or FNOL product or API surface found.
+  authModel:
+    scheme: OAuth 2.0 / OpenID Connect authorization code (Auth0)
+    issuer: https://auth.artificialos.com/
+    discovery: https://auth.artificialos.com/.well-known/openid-configuration
+    discoveryHttpStatus: 200
+    tenant: artificial.uk.auth0.com (Auth0 UK region)
+    scopesObserved:
+    - openid
+    - profile
+    - email
+    note: |
+      Standard Auth0 OIDC scopes only; no insurance-domain or product scopes are
+      published. https://artificial.io/.well-known/openid-configuration and
+      /.well-known/oauth-authorization-server both return HTTP 404. No public
+      API-key issuance, no client-credentials documentation, no mTLS
+      documentation. Partner API credentials are presumed issued out of band.
+  transports:
+  - protocol: REST
+    scheme: https
+    documented: false
+    note: Company blog states risk data moves to and from the Artificial platform
+      via API in a broker-to-syndicate flow, but no base URL, endpoint, or method
+      is published anywhere public.
+  - protocol: GraphQL
+    documented: false
+    note: No /graphql surface found on any resolving host; nothing to introspect.
+  - protocol: gRPC
+    documented: false
+    note: No published .proto found.
+  - protocol: WebSocket
+    scheme: wss
+    documented: false
+    note: No WebSocket surface documented or discoverable.
+  - protocol: Webhooks/Events
+    documented: false
+    note: No event catalog and no AsyncAPI. Absence is the finding.
+  probes:
+  - url: https://artificial.io/
+    status: 200
+    note: Marketing site. No developer or API navigation in header or footer.
+  - url: https://docs.artificial.io/
+    status: 200
+    note: 413-byte redirect stub to /docs-site/. Server header Warp/3.4.9.
+  - url: https://docs.artificial.io/docs-site/
+    status: 200
+    note: Antora 3.1.12 landing page. "To view the documentation, you must sign in."
+  - url: https://docs.artificial.io/smart-underwriting/
+    status: 302
+    note: Redirects to https://auth.artificialos.com/authorize (Auth0 authorization
+      code).
+  - url: https://docs.artificial.io/smart-placement/
+    status: 302
+    note: Redirects to Auth0 login.
+  - url: https://docs.artificial.io/contract-builder/
+    status: 302
+    note: Redirects to Auth0 login.
+  - url: https://docs.artificial.io/docs-site/reference/glossary/
+    status: 302
+    note: Redirects to Auth0 login.
+  - url: https://docs.artificial.io/robots.txt
+    status: 200
+    note: 'Content: "User-agent: * / Disallow: /".'
+  - url: https://docs.artificial.io/openapi.json
+    status: 302
+    note: Redirects to Auth0 login. Not a specification.
+  - url: https://docs.artificial.io/openapi.yaml
+    status: 302
+    note: Redirects to Auth0 login. Not a specification.
+  - url: https://docs.artificial.io/swagger.json
+    status: 302
+    note: Redirects to Auth0 login. Not a specification.
+  - url: https://docs.artificial.io/api-docs
+    status: 302
+    note: Redirects to Auth0 login. Not a specification.
+  - url: https://docs.artificial.io/spec
+    status: 302
+    note: Redirects to Auth0 login. Not a specification.
+  - url: https://docs.artificial.io/redoc
+    status: 302
+    note: Redirects to Auth0 login. Not a specification.
+  - url: https://artificial.io/developers
+    status: 404
+  - url: https://artificial.io/api
+    status: 404
+  - url: https://artificial.io/developer
+    status: 404
+  - url: https://artificial.io/partners
+    status: 404
+  - url: https://artificial.io/integrations
+    status: 404
+  - url: https://artificial.io/llms.txt
+    status: 404
+  - url: https://developer.artificial.io/
+    status: 0
+    note: No DNS record.
+  - url: https://developers.artificial.io/
+    status: 0
+    note: No DNS record.
+  - url: https://api.artificial.io/
+    status: 0
+    note: No DNS record.
+  - url: https://artificialos.com/
+    status: 0
+    note: No DNS record on the apex; only auth.artificialos.com resolves.
+  - url: https://api.artificialos.com/
+    status: 0
+    note: No DNS record.
+  - url: https://auth.artificialos.com/.well-known/openid-configuration
+    status: 200
+    note: Auth0 OIDC discovery document, publicly readable.
+  - url: https://api.github.com/orgs/artificial-labs
+    status: 200
+    note: Organization exists, created 2021-10-21, public_repos = 0.
+  - url: https://www.artificial.io/sitemap-pages.xml
+    status: 200
+    note: 147 URLs, no developer/API/integration page.
+sources:
+- url: https://artificial.io/
+  type: Website
+  note: Positioning as "the foundations of modern specialty (re)insurance"; products
+    Smart Underwriting and Smart Placement; customers Apollo, PPL, BMS Group.
+- url: https://artificial.io/about/
+  type: About
+  note: Co-founders/co-CEOs David King and Johnny Bridges, chairman Martin Reith,
+    CTO Zsolt Szende, CPO Tim Bates. HQ 1st Floor, 1-3 Frederick's Place, London EC2R
+    8AE.
+- url: https://docs.artificial.io/docs-site/
+  type: Documentation
+  note: Antora product documentation site; landing page public, all content behind
+    Auth0 sign-in.
+- url: https://artificial.io/company/blog/artificial-joins-acord-to-harness-data-standards
+  type: Blog
+  note: 03 Oct 2023. Artificial joins the ACORD Solutions Group Licensed Integrator
+    Partner program. Primary ACORD provenance.
+- url: https://artificial.io/company/blog/artificial-leverages-acord-transcriber-to-further-automate-data-extraction
+  type: Blog
+  note: Artificial integrates with the ACORD Transcriber API for automated data extraction
+    in its broking and underwriting tools.
+- url: https://artificial.io/company/blog/artificial-and-ppl-integrated-digital-contracts-whats-new-and-what-it-means
+  type: Blog
+  note: 'Data model alignment quote: "one structured data model that incorporates
+    MRC v3, ACORD GRLC and the Core Data Record (CDR)"; pre-submission validation
+    built around MRCv3 and ACORD standards.'
+- url: https://artificial.io/company/blog/ppl-launches-integrated-digital-contract-capability-powered-by-artificial
+  type: Blog
+  note: PPL Digital Contract Capability powered by Artificial; structured data templates
+    with API connectivity to brokers' in-house systems, aligned to ACORD data models
+    and MRCv3, ahead of Lloyd's Core Data Record.
+- url: https://artificial.io/company/blog/apis-the-london-markets-unsung-hero/
+  type: Blog
+  note: Describes the live quote-and-bind API loop between a London Market broker's
+    PAS and a Lloyd's syndicate's appetite on the Artificial platform. Names no standards
+    and links to no documentation.
+- url: https://artificial.io/company/blog/resilient-rest-apis-the-case-for-parallel-change
+  type: Blog
+  note: Engineering post on REST API versioning that displays an illustrative OpenAPI
+    document for a policies collection. Illustrative figure only; not a retrievable
+    specification, not harvested.
+- url: https://artificial.io/company/blog/artificial-launches-aglabs-to-build-the-foundations-of-agent-to-agent-market
+  type: Blog
+  note: agLabs research arm for agent-to-agent (A2A) market coordination between broker
+    and underwriter agents. No protocol, spec, MCP server, or developer surface published.
+- url: https://www.lloyds.com/insights/lloyds-lab/programmes-and-initiatives/lloyds-lab-accelerator/alumni/artificial-labs
+  type: ThirdParty
+  note: Lloyd's Lab accelerator alumni listing for Artificial Labs.
+actions:
+  openapiPath: null
+  openapiDirectoryOmitted: true
+  apisYmlUpdated: true
+  reason: |
+    apis[] is intentionally empty. Artificial Labs operates real partner APIs and
+    is demonstrably ACORD-aligned, but publishes no public self-serve developer
+    portal, no retrievable OpenAPI/Swagger, no public API host, no Postman
+    collection, no GraphQL endpoint and no event catalog. Listing an API entry
+    would require inventing a documentation URL or a base URL that does not
+    exist. Recording the gated posture accurately is the correct outcome for this
+    record.
