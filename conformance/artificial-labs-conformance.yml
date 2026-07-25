@@ -1,0 +1,128 @@
+generated: '2026-07-25'
+method: searched
+source: |
+  https://auth.artificialos.com/.well-known/openid-configuration (probed 200),
+  https://artificial.io/security/ (probed 200) and the company blog posts that
+  document the ACORD / MRCv3 / CDR data model. No OpenAPI exists for this
+  provider, so nothing here is derived from a specification.
+note: |
+  Two very different conformance stories sit on this record. The identity layer
+  is verifiable in the open: a standards-complete OAuth 2.0 / OpenID Connect
+  authorization server with discovery, PKCE, DPoP, device code, CIBA and token
+  exchange advertised anonymously. The data/contract layer is verifiable only by
+  the company's own published claims: Artificial is an ACORD Solutions Group
+  Licensed Integrator Partner and builds Contract Builder and Smart Placement on
+  a structured model incorporating MRC v3, ACORD GRLC and the Lloyd's Core Data
+  Record, with pre-submission validation against MRCv3 and ACORD standards. No
+  public artifact lets an outsider test the second claim, so it is recorded as
+  claimed rather than verified.
+standards:
+- id: oauth2
+  conforms: true
+  evidence: Auth0 authorization server at https://auth.artificialos.com/ with authorize,
+    token, revoke, userinfo endpoints.
+  verification: verified
+- id: oidc-core
+  conforms: true
+  evidence: issuer, id_token_signing_alg_values_supported [HS256, RS256, PS256],
+    claims_supported, backchannel_logout_supported true.
+  verification: verified
+- id: oidc-discovery
+  conforms: true
+  evidence: /.well-known/openid-configuration returns HTTP 200.
+  verification: verified
+- id: rfc8414-authorization-server-metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns HTTP 200 (identical document
+    to the OIDC discovery response).
+  verification: verified
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported [S256, plain].
+  verification: verified
+- id: rfc9449-dpop
+  conforms: true
+  evidence: dpop_signing_alg_values_supported [ES256].
+  verification: verified
+- id: rfc8628-device-authorization-grant
+  conforms: true
+  evidence: device_authorization_endpoint and urn:ietf:params:oauth:grant-type:device_code.
+  verification: verified
+- id: rfc8693-token-exchange
+  conforms: true
+  evidence: urn:ietf:params:oauth:grant-type:token-exchange in grant_types_supported.
+  verification: verified
+- id: rfc7523-jwt-bearer
+  conforms: true
+  evidence: urn:ietf:params:oauth:grant-type:jwt-bearer and private_key_jwt client
+    authentication.
+  verification: verified
+- id: rfc7009-token-revocation
+  conforms: true
+  evidence: revocation_endpoint https://auth.artificialos.com/oauth/revoke.
+  verification: verified
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint https://auth.artificialos.com/oidc/register.
+  verification: verified
+- id: ciba-client-initiated-backchannel-authentication
+  conforms: true
+  evidence: backchannel_authentication_endpoint with poll delivery mode.
+  verification: verified
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns HTTP 404 on artificial.io.
+  verification: verified
+- id: acord-standards
+  conforms: true
+  claimed: true
+  verification: claimed
+  evidence: ACORD Solutions Group Licensed Integrator Partner since October 2023;
+    consumes the ACORD Transcriber API for automated data extraction.
+  source: https://artificial.io/company/blog/artificial-joins-acord-to-harness-data-standards
+- id: acord-grlc
+  conforms: true
+  claimed: true
+  verification: claimed
+  evidence: Contract Builder and Smart Placement operate on one structured data model
+    incorporating MRC v3, ACORD GRLC and the Core Data Record.
+  source: https://artificial.io/company/blog/artificial-and-ppl-integrated-digital-contracts-whats-new-and-what-it-means
+- id: mrc-v3
+  conforms: true
+  claimed: true
+  verification: claimed
+  evidence: Contract Builder generates MRCv3-compliant digital contracts with
+    pre-submission validation built around MRCv3 and ACORD standards; powers PPL's
+    integrated Digital Contract Capability.
+  source: https://artificial.io/company/blog/ppl-launches-integrated-digital-contract-capability-powered-by-artificial
+- id: lloyds-core-data-record
+  conforms: true
+  claimed: true
+  verification: claimed
+  evidence: Structured data model incorporates the Lloyd's Core Data Record (CDR).
+  source: https://artificial.io/company/blog/artificial-and-ppl-integrated-digital-contracts-whats-new-and-what-it-means
+- id: iso-27001
+  conforms: true
+  verification: claimed
+  evidence: '"We are a certified ISO 27001 company" — https://artificial.io/security/;
+    surfaced on the Vanta trust center at https://trust.artificial.io/.'
+- id: cyber-essentials-plus
+  conforms: true
+  verification: claimed
+  evidence: '"Cyber Essential+ certification" — https://artificial.io/security/ (UK
+    government-backed scheme).'
+- id: acord-al3
+  conforms: false
+  evidence: No AL3 flat-file, NGDS, IVANS or agency-download reference found; consistent
+    with a London Market specialty player rather than a US retail-agency one.
+- id: fhir-r4
+  conforms: false
+  evidence: Not a healthcare API.
+- id: rfc9457-problem-details
+  conforms: unknown
+  evidence: No public OpenAPI or error reference; the error envelope cannot be observed
+    from outside the partner relationship.
+- id: openapi
+  conforms: false
+  evidence: No retrievable OpenAPI or Swagger document on any resolving host (see
+    review.yml probes).

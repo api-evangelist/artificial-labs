@@ -1,0 +1,42 @@
+generated: '2026-07-25'
+method: searched
+source: public package registry searches, 2026-07-25
+note: |
+  No first-party Artificial Labs client library exists on any public registry.
+  This is consistent with the rest of the record: no public API host, no public
+  specification, no public developer portal, and a GitHub organization
+  (github.com/artificial-labs) with zero public repositories. Partner
+  integrations are built against credentials and documentation issued under
+  contract, so any client code lives inside the customer's estate. The PyPI
+  project "artificial" (0.0.2, "Artificial tools", author "Artificial team") was
+  inspected and is unrelated to Artificial Labs — it is not linked from any
+  Artificial Labs property and is not claimed as first-party.
+packages: []
+registries_searched:
+- registry: npm
+  query: artificial-labs / artificial insurance underwriting
+  result: no first-party package
+- registry: pypi
+  queries:
+  - name: artificial
+    status: 200
+    result: unrelated third-party project (0.0.2), not first-party
+  - name: artificial-labs
+    status: 404
+  - name: artificialos
+    status: 404
+- registry: github
+  query: github.com/artificial-labs
+  result: organization exists (created 2021-10-21) with 0 public repositories
+- registry: maven-central
+  result: not searched by coordinate; no Java SDK referenced on any public Artificial
+    Labs page
+- registry: nuget
+  result: no first-party package referenced on any public Artificial Labs page
+- registry: rubygems
+  result: no first-party package referenced on any public Artificial Labs page
+- registry: packagist
+  result: no first-party package referenced on any public Artificial Labs page
+- registry: crates.io
+  result: no first-party package referenced on any public Artificial Labs page
+official_sdks: 0

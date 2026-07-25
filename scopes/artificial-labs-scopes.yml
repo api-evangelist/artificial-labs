@@ -1,0 +1,74 @@
+generated: '2026-07-25'
+method: searched
+source: https://auth.artificialos.com/.well-known/openid-configuration
+note: |
+  These are the scopes the Artificial Labs Auth0 tenant advertises in its
+  anonymous discovery document — standard OpenID Connect scopes and claim-scopes
+  only. No product or insurance-domain scopes (underwriting, placement, contract,
+  submission, quote, bind) are published anywhere public; any API-level
+  authorization model for Smart Underwriting, Smart Placement or Contract Builder
+  lives behind the partner contract and cannot be harvested. The documentation
+  client observed in the wild (docs.artificial.io via oauth2-proxy) requests only
+  "openid profile email".
+schemes:
+- name: Auth0 OpenID Connect
+  source: well-known/artificial-labs-openid-configuration.json
+  issuer: https://auth.artificialos.com/
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.artificialos.com/authorize
+    tokenUrl: https://auth.artificialos.com/oauth/token
+  - flow: clientCredentials
+    tokenUrl: https://auth.artificialos.com/oauth/token
+scopes:
+- scope: openid
+  description: Request an ID token / OpenID Connect authentication.
+  flows: [authorizationCode]
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: profile
+  description: Basic profile claims (name, given_name, family_name, nickname, picture,
+    created_at).
+  flows: [authorizationCode]
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: email
+  description: Email address and email_verified claim.
+  flows: [authorizationCode]
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: offline_access
+  description: Issue a refresh token.
+  flows: [authorizationCode]
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: name
+  description: name claim.
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: given_name
+  description: given_name claim.
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: family_name
+  description: family_name claim.
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: nickname
+  description: nickname claim.
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: email_verified
+  description: email_verified claim.
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: picture
+  description: picture claim.
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: created_at
+  description: created_at claim.
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: identities
+  description: Linked identity providers for the user.
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: phone
+  description: phone_number claim.
+  sources: [well-known/artificial-labs-openid-configuration.json]
+- scope: address
+  description: address claim.
+  sources: [well-known/artificial-labs-openid-configuration.json]
+observed_in_use:
+- client: docs.artificial.io oauth2-proxy
+  scope: openid profile email
+domain_scopes_published: false

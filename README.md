@@ -53,6 +53,18 @@ ACORD Solutions Group **Licensed Integrator Partner** (joined October 2023). Con
 
 OAuth 2.0 / OpenID Connect authorization code via Auth0 (UK tenant, `artificial.uk.auth0.com`). Discovery is public at [https://auth.artificialos.com/.well-known/openid-configuration](https://auth.artificialos.com/.well-known/openid-configuration) (HTTP 200) and advertises only standard OIDC scopes — `openid profile email`. No public API-key issuance, no client-credentials documentation, no published domain scopes. Partner API credentials are issued out of band.
 
+## Artifacts harvested
+
+The 2026-07-25 enrichment round re-ran contract discovery against every resolving host (including a certificate-transparency sweep of `*.artificial.io`) and confirmed the no-public-contract finding: `api.genesis.preview.artificial.io`, `genesis.preview.artificial.io` and `artificialos.preview.artificial.io` have DNS records but answer nothing, and `office.artificial.io` is an office-move microsite with no API. What it did find and save:
+
+- `well-known/` — the Auth0 tenant publishes a full anonymous discovery surface: [`/.well-known/openid-configuration`](https://auth.artificialos.com/.well-known/openid-configuration) (200), [`/.well-known/oauth-authorization-server`](https://auth.artificialos.com/.well-known/oauth-authorization-server) (200, byte-identical) and `jwks.json` (200, two RS256 keys). No `security.txt`, `api-catalog`, `ai-plugin.json` or agent card anywhere.
+- `authentication/` + `scopes/` — the full OAuth 2.0 / OIDC profile: authorization code with PKCE (S256), client credentials, device code, CIBA, RFC 8693 token exchange, `private_key_jwt`, DPoP (ES256), MFA. Only standard OIDC scopes are published; **no insurance-domain scopes exist publicly**.
+- `security/` — a **Vanta trust center at [trust.artificial.io](https://trust.artificial.io/)** (found by hand; the page is client-rendered and exposes no anonymous JSON), plus **ISO 27001** and **Cyber Essentials Plus** certifications, HSTS-enforced TLS 1.3, AES-256 at rest and external penetration testing from the security page. No security.txt, no bug bounty; the only disclosure route is `privacy@artificial.io` in the Acceptable Use Policy.
+- `conformance/` — twelve identity standards verified live; ACORD, ACORD GRLC, MRC v3 and the Lloyd's Core Data Record recorded as **claimed** (company-published, not externally testable).
+- `lifecycle/` — no status page, no deprecation policy, no SLA. `artificial.statuspage.io` resolves but is a **squatted generic-word page** with placeholder components and 2023 spam, explicitly *not* recorded as this provider's status page.
+- `packages/` — zero first-party SDKs on npm, PyPI or any other registry; the PyPI project `artificial` is unrelated.
+- `llms/` — generated agent-readable summary of what is genuinely public.
+
 ## Links
 
 - [Website](https://artificial.io/)

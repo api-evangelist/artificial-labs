@@ -1,0 +1,68 @@
+# Artificial Labs
+
+> Artificial Labs is a London-based insurance technology company building algorithmic and digital underwriting software for the specialty and reinsurance market, with the Lloyd's of London subscription market as its home ground. It sells Smart Underwriting (configurable lead-and-follow digital underwriting with appetite modelling and accept/refer/decline submission triage), Smart Placement (broker-side placement and distribution) and Contract Builder (MRCv3-compliant structured digital contract creation, which powers PPL's integrated Digital Contract Capability) to carriers, syndicates, MGAs and wholesale brokers.
+
+Artificial Labs runs real production APIs and talks about them publicly, but does
+not expose them publicly. There is no self-serve developer portal, no retrievable
+OpenAPI or Swagger definition, no public API host, no public Postman collection,
+no GraphQL endpoint, no MCP server and no event or webhook catalog. API
+credentials are issued out of band under a partner or customer contract. The
+documentation host docs.artificial.io answers HTTP 200 on its landing page only —
+"To view the documentation, you must sign in" — and every product path 302s to an
+Auth0 login at auth.artificialos.com. api.artificial.io and
+developer.artificial.io have no DNS records. github.com/artificial-labs has zero
+public repositories. This file records what is genuinely public.
+
+Generated: 2026-07-25 by the API Evangelist enrichment pipeline (method: generated,
+source: apis.yml + repo artifacts).
+
+## APIs
+
+- [Public API surface](https://artificial.io/): none. Quote, bind and issue flows
+  run partner-to-partner (broker PAS to carrier/syndicate) over private APIs; no
+  FNOL or claims product exists.
+
+## Specs
+
+- No OpenAPI, AsyncAPI, GraphQL SDL or Protobuf is published. See
+  [review.yml](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/review.yml)
+  for every probed URL and its HTTP status.
+
+## Identity and security artifacts
+
+- [OpenID Connect discovery](https://auth.artificialos.com/.well-known/openid-configuration): Auth0 UK tenant (artificial.uk.auth0.com), issuer https://auth.artificialos.com/
+- [Authentication profile](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/authentication/artificial-labs-authentication.yml)
+- [OAuth scopes](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/scopes/artificial-labs-scopes.yml): standard OIDC scopes only; no domain scopes published
+- [Well-known index](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/well-known/artificial-labs-well-known.yml)
+- [Conformance](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/conformance/artificial-labs-conformance.yml): OAuth 2.0/OIDC verified; ACORD, MRCv3, ACORD GRLC and Lloyd's Core Data Record claimed
+- [Domain security](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/security/artificial-labs-domain-security.yml)
+- [Trust center](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/security/artificial-labs-trust-center.yml): Vanta, ISO 27001, Cyber Essentials Plus
+- [Vulnerability disclosure](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/security/artificial-labs-vulnerability-disclosure.yml)
+- [Lifecycle](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/lifecycle/artificial-labs-lifecycle.yml)
+- [Packages](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/packages/artificial-labs-packages.yml): no first-party SDK on any registry
+
+## Docs
+
+- [Website](https://artificial.io/)
+- [Documentation (sign-in required)](https://docs.artificial.io/docs-site/)
+- [Documentation sign-in](https://docs.artificial.io/oauth2/start)
+- [Security](https://artificial.io/security/)
+- [Trust center](https://trust.artificial.io/)
+- [About](https://artificial.io/about/)
+- [Blog](https://artificial.io/company/blog/)
+- [Contact](https://artificial.io/contact/)
+- [GitHub organization](https://github.com/artificial-labs)
+- [LinkedIn](https://www.linkedin.com/company/artificial-labs)
+
+## Standards posture
+
+- ACORD Solutions Group Licensed Integrator Partner (October 2023)
+- MRC v3, ACORD GRLC and the Lloyd's Core Data Record in one structured data model
+- Consumes the third-party ACORD Transcriber API for automated data extraction
+- No AL3, NGDS, IVANS or agency-download surface — a London Market specialty
+  player, not a US retail-agency one
+
+## Optional
+
+- [APIs.json](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/apis.yml)
+- [API Evangelist review](https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/review.yml)

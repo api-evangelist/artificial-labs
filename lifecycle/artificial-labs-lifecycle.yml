@@ -1,0 +1,48 @@
+generated: '2026-07-25'
+method: searched
+source: probes of artificial.io, docs.artificial.io and candidate status hosts, 2026-07-25
+note: |
+  Artificial Labs publishes no versioning policy, no deprecation policy, no SLA
+  and no status page on any public surface. What it does publish is engineering
+  intent: a company blog post, "Resilient REST APIs: The case for Parallel
+  Change", that argues for expand/contract (parallel change) API evolution rather
+  than breaking version bumps, and illustrates it with a policies collection. That
+  is a stated philosophy, not a contractual policy, and is recorded as such.
+  Release notes for Smart Underwriting, Smart Placement and Contract Builder are
+  presumed to live inside the Auth0-gated Antora documentation site; nothing is
+  readable without a customer login.
+versioning:
+  scheme: unpublished
+  current: null
+  docs: null
+  stated_approach: parallel change (expand/contract) — evolve a REST API in place
+    rather than cutting a breaking version
+  stated_approach_source: https://artificial.io/company/blog/resilient-rest-apis-the-case-for-parallel-change
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: No RFC 8594 Sunset/Deprecation header guidance is published; no public
+    operations exist to mark deprecated.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  probes:
+  - url: https://status.artificial.io/
+    status: 0
+    note: No DNS record.
+  - url: https://status.artificialos.com/
+    status: 0
+    note: No DNS record.
+  - url: https://artificial.statuspage.io/
+    status: 200
+    note: NOT Artificial Labs. The Statuspage API summary shows placeholder components
+      ("API (example)", "Management Portal (example)") and a single 2023 spam
+      incident linking to unrelated third-party sites. Squatted generic-word page;
+      deliberately not recorded as this provider's status page.
+changelog:
+  url: null
+  note: No public changelog or release-notes page; the documentation host requires
+    an Auth0 sign-in for every product path.
+deprecated_operations: []

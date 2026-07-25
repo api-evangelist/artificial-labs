@@ -1,0 +1,39 @@
+generated: '2026-07-25'
+method: searched
+probe: true
+url: https://trust.artificial.io/
+platform: Vanta Trust Center
+title: artificial Trust Center
+http_status: 200
+note: |
+  trust.artificial.io resolves (Cloudflare, 104.18.27.175) and returns a Vanta
+  trust-report shell (data-slugid umk1tnxvxh2x1rwrb313x7, canonical
+  https://trust.artificial.io). The page body is rendered client-side and no
+  anonymous JSON endpoint was found — every /api/* path returns the same SPA
+  HTML — so the certification list below is taken from the company's own public
+  security page rather than from the trust center payload. The generic
+  probe-security-programs.py run did not record this host because the shell
+  carries no keyword text; it was found by hand and is recorded here.
+certifications:
+- ISO 27001
+- Cyber Essentials Plus
+security_controls_published:
+- HTTPS enforced with HSTS, "strongest TLS security policies"
+- External penetration testing of all applications
+- Group-based and role-based access control on infrastructure and application, with
+  full audit log of administrative and user access
+- AES-256 encryption at rest; sensitive data only on privately accessible servers
+- Automated alerting and monitoring
+- Per-application AWS account and VPC isolation; databases reachable only over private
+  connections
+evidence:
+- source: https://trust.artificial.io/
+  kind: trust center
+  keywords: [trust center, security, compliance]
+- source: https://artificial.io/security/
+  kind: security page
+  keywords: [iso 27001, cyber essential+, penetration testing, aes-256, hsts]
+related:
+- security/artificial-labs-domain-security.yml
+- security/artificial-labs-vulnerability-disclosure.yml
+- conformance/artificial-labs-conformance.yml

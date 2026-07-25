@@ -1,0 +1,52 @@
+generated: '2026-07-25'
+method: searched
+source: live probes of every resolving Artificial Labs host
+note: |
+  Only two Artificial Labs hosts resolve and answer on the public internet with a
+  /.well-known/ surface worth probing: the marketing site artificial.io and the
+  Auth0 identity tenant auth.artificialos.com. The Auth0 tenant publishes a full,
+  anonymous OpenID Connect / RFC 8414 discovery surface plus JWKS; the marketing
+  site publishes nothing under /.well-known/. There is no public API host
+  (api.artificial.io, developer.artificial.io, app.artificial.io and
+  api.artificialos.com have no DNS records), so there is no API-host well-known
+  surface to harvest.
+hosts:
+- host: https://auth.artificialos.com
+  role: identity provider (Auth0 UK tenant, artificial.uk.auth0.com)
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: artificial-labs-openid-configuration.json
+    note: OpenID Connect Discovery 1.0 document for issuer https://auth.artificialos.com/
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: artificial-labs-oauth-authorization-server.json
+    note: RFC 8414 authorization server metadata; byte-identical to the OIDC discovery
+      document (Auth0 serves one document at both paths).
+  - path: /.well-known/jwks.json
+    status: 200
+    file: artificial-labs-jwks.json
+    note: Two RS256 signing keys (kid tKbvNDfCIVVguvnQmZ-b5, E6FWxuidqr-_JyDEL3rCK).
+- host: https://artificial.io
+  role: marketing website
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+- host: https://docs.artificial.io
+  role: product documentation (oauth2-proxy in front of Auth0)
+  documents:
+  - path: /.well-known/security.txt
+    status: 302
+    note: Redirects to the Auth0 login like every other gated path on this host.

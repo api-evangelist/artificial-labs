@@ -68,8 +68,16 @@ common:
   url: https://artificial.io/company/blog/
 - type: Contact
   url: https://artificial.io/contact/
+- type: Support
+  url: https://artificial.io/contact/
+- type: Login
+  url: https://docs.artificial.io/oauth2/start
 - type: Security
   url: https://artificial.io/security/
+- type: Compliance
+  url: https://trust.artificial.io/
+- type: TrustCenter
+  url: security/artificial-labs-trust-center.yml
 - type: TermsOfService
   url: https://artificial.io/website-terms/
 - type: EULA
@@ -82,8 +90,26 @@ common:
   url: https://github.com/artificial-labs
 - type: LinkedIn
   url: https://www.linkedin.com/company/artificial-labs
-- type: Authentication
+- type: OpenIDConnect
   url: https://auth.artificialos.com/.well-known/openid-configuration
+- type: Authentication
+  url: authentication/artificial-labs-authentication.yml
+- type: OAuthScopes
+  url: scopes/artificial-labs-scopes.yml
+- type: WellKnown
+  url: well-known/artificial-labs-well-known.yml
+- type: Conformance
+  url: conformance/artificial-labs-conformance.yml
+- type: DomainSecurity
+  url: security/artificial-labs-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/artificial-labs-vulnerability-disclosure.yml
+- type: Lifecycle
+  url: lifecycle/artificial-labs-lifecycle.yml
+- type: Packages
+  url: packages/artificial-labs-packages.yml
+- type: LLMsTxt
+  url: llms/artificial-labs-llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
