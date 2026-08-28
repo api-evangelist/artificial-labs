@@ -39,6 +39,17 @@ description: >-
   extraction. That is the honest shape of this record: real, working,
   standards-aligned insurance APIs that are invisible from outside the
   contractual relationship.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Insurance
