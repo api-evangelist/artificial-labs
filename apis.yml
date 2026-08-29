@@ -1,5 +1,8 @@
 aid: artificial-labs
 url: https://raw.githubusercontent.com/api-evangelist/artificial-labs/refs/heads/main/apis.yml
+x-api-posture: no-product-api
+x-api-posture-basis: observed
+x-api-posture-note: "Its API posture is partner-gated and matches the London Market pattern: Artificial talks publicly and often about APIs as the connective tissue between broker PAS, carrier systems and its own platform"
 name: Artificial Labs
 kind: company
 description: >-
